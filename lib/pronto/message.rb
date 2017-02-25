@@ -1,6 +1,7 @@
 module Pronto
   class Message
-    attr_reader :path, :line, :level, :msg, :commit_sha, :runner
+    attr_reader :path, :line, :msg, :commit_sha, :runner
+    attr_accessor :level
 
     LEVELS = %i[info warning error fatal].freeze
 
