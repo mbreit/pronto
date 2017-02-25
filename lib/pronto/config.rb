@@ -31,6 +31,10 @@ module Pronto
         .map { |path| File.expand_path(path) }
     end
 
+    def override_level(runner)
+      runner_config(runner)['level']
+    end
+
     def runner_config(runner)
       @config_hash.fetch(runner, {})
     end

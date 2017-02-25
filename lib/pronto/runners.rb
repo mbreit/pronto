@@ -17,13 +17,20 @@ module Pronto
           @config.excluded_files(runner.title), patches
         )
         next if runner_patches.none?
-        result += runner.new(runner_patches, patches.commit).run.flatten.compact
+        result += run_runner(runner, patches)
       end
       result = result.take(@config.max_warnings) if @config.max_warnings
       result
     end
 
     private
+
+    def run_runner(runner, patches)
+      override_level = @config.override_level(runner.title)
+      runner.new(patches, patches.commit).run.flatten.compact.each do |msg|
+        msg.level = override_level.to_sym if override_level
+      end
+    end
 
     def reject_excluded(excluded_files, patches)
       return patches unless excluded_files.any?
