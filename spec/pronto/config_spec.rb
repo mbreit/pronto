@@ -55,5 +55,21 @@ module Pronto
         it { should == 'ruby/ruby' }
       end
     end
+
+    describe '#runner_config' do
+      subject { config.runner_config('my_runner') }
+
+      context 'without runner key' do
+        it { should == {} }
+      end
+
+      context 'with configuration' do
+        let(:config_hash) do
+          { 'my_runner' => { 'default_level' => 'warning' } }
+        end
+
+        it { should == { 'default_level' => 'warning' } }
+      end
+    end
   end
 end

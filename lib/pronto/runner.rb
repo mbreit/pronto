@@ -34,6 +34,10 @@ module Pronto
       @patches.first.repo.path
     end
 
+    def config
+      @config ||= Config.new.runner_config(self.class.title)
+    end
+
     private
 
     def rb_file?(path)

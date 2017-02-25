@@ -23,12 +23,16 @@ module Pronto
         if runner == 'all'
           ENV['PRONTO_EXCLUDE'] || @config_hash['all']['exclude']
         else
-          @config_hash.fetch(runner, {})['exclude']
+          runner_config(runner)['exclude']
         end
 
       Array(files)
         .flat_map { |path| Dir[path.to_s] }
         .map { |path| File.expand_path(path) }
+    end
+
+    def runner_config(runner)
+      @config_hash.fetch(runner, {})
     end
 
     def github_hostname
